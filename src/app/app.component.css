@@ -1,0 +1,20 @@
+.header {
+  background-color: #FFFFFF;
+}
+.btn-custom {
+  background-color: #1b60db;
+  margin: 1rem 1rem 1rem 0;
+
+}
+
+.btn-custom:hover {
+  text-decoration: underline;
+  background-color: #1b60db;
+  margin: 1rem 1rem 1rem 0;
+
+}
+
+.content__font__color{
+  color: #141251;
+}
+

@@ -1,20 +1,68 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="main-container">
+  <header class="header header-6">
+    <div class="branding">
+     <img src="../assets/img/SCG-logo-4.png" alt="Schiphol Group Logo"/>
+     <span class="title"></span>
+    </div>
+  </header>
 
+  <div class="content-container content__font__color">
+    <div class="content-area">
+      <!-- ALERT MESSAGE COPIED -->
+      <!-------------------------->
+      <div class="alert alert-success" *ngIf="isCopied == true">
+        <div class="alert-items">
+          <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+            </div>
+            <span class="alert-text">Totaal is gekopieerd!</span>
+          </div>
+        </div>
+      </div>
+
+      <h1>SCG - G REKENING CALCULATOR</h1>
+           <!-- 2nd WERK -- -->
+      <div class="clr-row">
+        <div class="clr-col">
+          <span>
+            <form clrForm clrLayout="vertical" [(ngModel)]="grekeningForm" class="form-group" #myForm="ngForm">
+              <div class="form-control">
+              <clr-input-container>
+                <label>Subtotaal</label>
+                <input clrInput placeholder="Voer subtotaal in!" name="controlSubtotal" [(ngModel)]="subtotal" [ngModelOptions]="{standalone: true}" required step=".01" pattern= "^[0-9]{1,12}$" />
+              </clr-input-container>
+              <label for="taxtype_1">BTW Type</label>
+                <div class="select">
+                  <select id="taxtype_1" [(ngModel)]="selectedTaxType" (ngModelChange)="selected($event)" (change)="selected($event)" name="controlTaxType">
+                    <option *ngFor="let taxC of taxCodes" data-value=" {{ taxC.taxvalue}}" [value]="taxC.taxvalue">{{ taxC.name}}</option>
+                  </select>
+                </div>
+              <clr-input-container>
+                <label>Percentage:</label>
+                  <input clrInput placeholder="Voer een geldige waarde in!" name="userinput" [(ngModel)]="userinput"  [ngModelOptions]="{standalone: true}" max="100" min="1" maxlength="3" pattern= "^[0-9]{1,3}$" required />
+               <!-- <clr-control-error *ngIf="userinput.value > 100">Voer een getal in dat kleiner of gelijk is aan 100.</clr-control-error>
+                <!--  <clr-control-error *ngIf="userinput.invalid && (userinput.dirty || userinput.touched)">Voer een geldig getal in</clr-control-error>-->
+                <!--<clr-control-error *ngIf="userinput.value > 100"> Voer een getal in kleiner dan 100</clr-control-error> -->
+               </clr-input-container>
+              <button class="btn btn-primary btn-custom" (click)="calculate()">Calculate</button>
+              <button class="btn btn-secondary btn-clear" (click)="myForm.reset();clear()">Clear</button>
+              </div>
+            </form>
+          </span>
+        <div class="clr-col">
+          <span>
+            <form clrForm>
+              <clr-input-container>
+                <label>Totaal</label>
+                <input clrInput placeholder="" name="name" [ngModel]="gtotal | number: '1.2-2'" (ngModelChange)="gtotal = $event" readonly #inputTarget />
+              </clr-input-container>
+              <clr-icon shape="copy" [ngxClipboard]="inputTarget" (cbOnSuccess) ="isCopied = true"></clr-icon>
+            </form>
+          </span>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
