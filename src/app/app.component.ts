@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {$} from 'protractor';
+import {d} from '../../node_modules/@angular/core/src/render3';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +16,7 @@ export class AppComponent {
   public gtotal: number;
   public copyTotal: string;
   public isCopied: boolean;
+  public errorSubtotal = 'Leeg veld, voer een waarde in!';
 
   public taxCodes = [
     {name: 'NL-HOOG', taxvalue: 0.21},
@@ -38,7 +41,21 @@ export class AppComponent {
     console.log(this.selectedTaxType);
     console.log(this.gtotal);
   }
+
   copyToClipboard(): void {
     this.copyTotal = this.gtotal.toString(10);
   }
+
+  _keyPress(event: any) {
+    const pattern = /[^\d+(\.\d+)*$]/;
+    // const pattern = /[0-9\+\-\ ]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      // this.errorSubtotal = 'Voer alleen getallen in!';
+      event.preventDefault();
+    }
+  }
 }
+
